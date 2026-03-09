@@ -1,0 +1,11 @@
+{
+  "dataset": "TIMOLAB_AGENT_BEHAVIOR_V1",
+  "description": "Dataset capturing exploration patterns of autonomous agents navigating ambiguous information environments.",
+  "metrics": [
+    "curiosity_score",
+    "path_length",
+    "decision_time",
+    "uncertainty_response"
+  ],
+  "records": []
+}

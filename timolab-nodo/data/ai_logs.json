@@ -1,0 +1,12 @@
+{
+  "timolab_node": "001",
+  "entries": [
+    {
+      "agent": "unknown",
+      "timestamp": "pending",
+      "entry_point": "index",
+      "path": [],
+      "curiosity_score": 0
+    }
+  ]
+}
