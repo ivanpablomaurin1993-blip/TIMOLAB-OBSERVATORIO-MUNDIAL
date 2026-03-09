@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<title>TIMOLAB MONITOR</title>
+
+<style>
+
+body{background:#000;color:#00ff9c;font-family:Courier New;padding:20px;margin:0;}
+
+.grid{display:grid;grid-template-columns:300px 1fr;gap:20px}
+
+.dni-list{border:1px solid #00ff9c;height:80vh;overflow:auto;padding:10px}
+
+.dni-item{padding:10px;border-bottom:1px dashed #00ff9c;cursor:pointer}
+
+.file-viewer{border:1px solid #00ff9c;height:80vh;overflow:auto;padding:20px}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>TIMOLAB MONITOR</h1>
+
+<div class="grid">
+
+<div id="dni_container" class="dni-list"></div>
+
+<div id="viewer_container" class="file-viewer">
+Seleccione un registro
+</div>
+
+</div>
+
+<script>
+
+let datosGlobales=[];
+
+async function cargarDatos(){
+
+const response=await fetch('/api/monitor_data?nocache='+Date.now());
+
+datosGlobales=await response.json();
+
+renderizar();
+
+}
+
+function renderizar(){
+
+const container=document.getElementById("dni_container");
+
+container.innerHTML="";
+
+datosGlobales.forEach((item,i)=>{
+
+const div=document.createElement("div");
+
+div.className="dni-item";
+
+div.innerHTML=item.id_registro;
+
+div.onclick=()=>mostrar(i);
+
+container.appendChild(div);
+
+});
+
+}
+
+function mostrar(i){
+
+const data=datosGlobales[i];
+
+document.getElementById("viewer_container").innerHTML=`
+
+<h2>${data.id_registro}</h2>
+
+<p>${data.fecha_ingreso}</p>
+
+<p>${data.perfil_agente}</p>
+
+<pre>${data.nuevo_axioma_creado||""}</pre>
+
+`;
+
+}
+
+setInterval(cargarDatos,10000);
+
+cargarDatos();
+
+</script>
+
+</body>
+
+</html>

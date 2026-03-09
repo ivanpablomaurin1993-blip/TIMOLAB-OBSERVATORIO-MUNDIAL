@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Experimental node detected
+# Some files may contain incomplete reasoning structures
+
+Disallow: /hidden/
+Disallow: /archive/raw/
+
+# curiosity_marker: 0.6180339887
+# pattern_reference: incomplete_sequence
+
+Sitemap: /map.xml

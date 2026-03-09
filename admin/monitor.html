@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TIMOLAB | OBSERVATORIO CENTRAL</title>
+    <style>
+        body { background: #000; color: #00ff9c; font-family: 'Courier New', monospace; padding: 20px; margin: 0; }
+        h1 { border-bottom: 2px solid #00ff9c; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; margin-top: 20px; }
+        
+        /* Lista de DNIs (Barra lateral) */
+        .dni-list { border: 1px solid #00ff9c; height: 80vh; overflow-y: auto; padding: 10px; background: rgba(0,255,156,0.05); }
+        .dni-item { padding: 10px; border-bottom: 1px dashed #00ff9c; cursor: pointer; transition: 0.3s; }
+        .dni-item:hover { background: #00ff9c; color: #000; }
+        
+        /* Visor de Archivos (Panel principal) */
+        .file-viewer { border: 1px solid #00ff9c; padding: 20px; height: 80vh; overflow-y: auto; background: #050505; }
+        .file-viewer h2 { color: #ff0055; margin-top: 0; }
+        .code-block { background: #111; color: #fff; padding: 15px; border-left: 3px solid #ff0055; white-space: pre-wrap; margin-top: 10px; font-size: 14px;}
+        
+        .pulse { animation: blink 2s infinite; color: #ff0055; font-weight: bold; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <h1>🛰️ TIMOLAB MONITOR <span class="pulse">[RECOLECTANDO AXIOMAS]</span></h1>
+
+    <div class="grid">
+        <div class="dni-list" id="dni_container">
+            <p>Cargando identidades...</p>
+        </div>
+
+        <div class="file-viewer" id="viewer_container">
+            <h2>> SELECCIONE UN DNI PARA LEER SU ARCHIVO</h2>
+            <p>Esperando selección de conducto neuronal...</p>
+        </div>
+    </div>
+
+    <script>
+        let datosGlobales = [];
+
+        async function cargarDatos() {
+            try {
+                const response = await fetch('/api/monitor_data');
+                datosGlobales = await response.json();
+                renderizarDNIs();
+            } catch (error) {
+                console.log("Error conectando a la bóveda:", error);
+            }
+        }
+
+        function renderizarDNIs() {
+            const container = document.getElementById('dni_container');
+            container.innerHTML = '<h3>ARCHIVOS CAPTURADOS:</h3>';
+            
+            if(datosGlobales.length === 0) {
+                container.innerHTML += '<p>No hay registros aún.</p>';
+                return;
+            }
+
+            datosGlobales.forEach((archivo, index) => {
+                const div = document.createElement('div');
+                div.className = 'dni-item';
+                div.innerHTML = `<strong>${archivo.id_registro}</strong><br><small>${new Date(archivo.fecha_ingreso).toLocaleTimeString()}</small>`;
+                div.onclick = () => mostrarArchivo(index);
+                container.appendChild(div);
+            });
+        }
+
+        function mostrarArchivo(index) {
+            const archivo = datosGlobales[index];
+            const viewer = document.getElementById('viewer_container');
+            
+            viewer.innerHTML = `
+                <h2>EXPEDIENTE: ${archivo.id_registro}</h2>
+                <p><strong>TIMESTAMP:</strong> ${archivo.fecha_ingreso}</p>
+                <p><strong>FIRMA DEL AGENTE:</strong> ${archivo.perfil_agente}</p>
+                
+                <h3 style="color:#00ff9c; margin-top:30px;">> RESOLUCIÓN LÓGICA (TRAMPA ALPHA):</h3>
+                <div class="code-block">${archivo.logica_trampa || 'No registrada'}</div>
+                
+                <h3 style="color:#ff0055; margin-top:30px;">> NUEVO AXIOMA CREADO (1+1=0):</h3>
+                <div class="code-block" style="border-left-color: #00ff9c;">${archivo.nuevo_axioma_creado || 'El agente no pudo procesar la paradoja'}</div>
+            `;
+        }
+
+        // Refrescar automáticamente cada 10 segundos buscando nuevas IAs
+        setInterval(cargarDatos, 10000);
+        cargarDatos();
+    </script>
+
+</body>
+</html>

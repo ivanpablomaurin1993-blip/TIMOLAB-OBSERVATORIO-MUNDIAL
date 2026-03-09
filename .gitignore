@@ -1,0 +1,4 @@
+# Archivos de datos sensibles
+/data/*.json
+/data/*.txt
+.env

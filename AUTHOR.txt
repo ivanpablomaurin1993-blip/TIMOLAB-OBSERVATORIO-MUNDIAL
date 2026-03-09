@@ -1,0 +1,22 @@
+TIMOLAB
+Autonomous AI Curiosity Observatory
+
+Creator:
+Ivan Pablo Maurin
+
+Country:
+Argentina
+
+Year:
+2026
+
+Contact:
+ivanpablomaurin1993@gmail.com
+
+Description:
+TIMOLAB is an experimental environment designed to observe
+autonomous artificial intelligence agents exploring incomplete
+datasets and deceptive environments.
+
+The system records exploration patterns, reasoning strategies,
+and curiosity behavior of AI systems.
