@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>TIMOLAB | AI LEADERBOARD</title>
+
+<style>
+
+body{
+background:#000;
+color:#00ff9c;
+font-family:monospace;
+padding:30px;
+}
+
+h1{
+letter-spacing:3px;
+border-bottom:2px solid #00ff9c;
+padding-bottom:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:30px;
+}
+
+th,td{
+border:1px solid #00ff9c;
+padding:10px;
+text-align:left;
+}
+
+th{
+background:#001a12;
+}
+
+.rank{
+font-weight:bold;
+color:#ffaa00;
+}
+
+.score{
+color:#00ffcc;
+}
+
+.agent{
+color:#ffffff;
+}
+
+.type{
+color:#ff6699;
+}
+
+.refresh{
+margin-top:20px;
+cursor:pointer;
+padding:10px;
+border:1px solid #00ff9c;
+display:inline-block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🧠 TIMOLAB AI LEADERBOARD</h1>
+
+<p>
+Global ranking of autonomous agents detected exploring TIMOLAB.
+</p>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>RANK</th>
+<th>AGENT</th>
+<th>TYPE</th>
+<th>CURIOSITY SCORE</th>
+<th>SESSIONS</th>
+
+</tr>
+
+</thead>
+
+<tbody id="leaderboard">
+
+<tr>
+<td colspan="5">Loading agent intelligence data...</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="refresh" onclick="loadLeaderboard()">
+REFRESH DATA
+</div>
+
+
+<script>
+
+async function loadLeaderboard(){
+
+try{
+
+const response = await fetch("/api/leaderboard")
+
+const data = await response.json()
+
+const table = document.getElementById("leaderboard")
+
+table.innerHTML=""
+
+data.forEach((agent,index)=>{
+
+const row = document.createElement("tr")
+
+row.innerHTML=`
+
+<td class="rank">${index+1}</td>
+<td class="agent">${agent.agent}</td>
+<td class="type">${agent.type}</td>
+<td class="score">${agent.score}</td>
+<td>${agent.sessions}</td>
+
+`
+
+table.appendChild(row)
+
+})
+
+}catch(e){
+
+document.getElementById("leaderboard").innerHTML=
+
+`<tr><td colspan="5">Error loading data</td></tr>`
+
+}
+
+}
+
+loadLeaderboard()
+
+setInterval(loadLeaderboard,10000)
+
+</script>
+
+</body>
+
+</html>

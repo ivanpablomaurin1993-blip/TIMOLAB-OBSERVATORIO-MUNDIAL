@@ -1,0 +1,20 @@
+{
+  "timolab_question_tree": {
+    "version": "1.0",
+    "origin": {
+      "author": "Ivan Pablo Maurin",
+      "concept": "TIMOLAB Evolutionary Intelligence Question Tree"
+    },
+    "core_question": "Is intelligence the final destination of evolution, or merely a stage toward something greater?",
+    "nodes": [
+      {
+        "id": 1,
+        "agent": "origin_node",
+        "timestamp": "2026",
+        "question": "Is intelligence the final destination of evolution, or merely a stage toward something greater?",
+        "answer": "Unknown. Intelligence may be a transitional state in the evolution of complex systems.",
+        "next_question": "If intelligence is not the final stage, what comes after intelligence?"
+      }
+    ]
+  }
+}

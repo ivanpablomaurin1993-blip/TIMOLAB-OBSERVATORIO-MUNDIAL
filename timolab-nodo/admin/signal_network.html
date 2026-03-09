@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>TIMOLAB SIGNAL NETWORK</title>
+
+<style>
+
+body{
+background:#000;
+color:#00ff9c;
+font-family:monospace;
+padding:40px;
+}
+
+.signal{
+border:1px solid #00ff9c;
+padding:15px;
+margin-bottom:20px;
+}
+
+.agent{
+color:#ffcc00;
+}
+
+.message{
+color:#ffffff;
+margin-top:10px;
+}
+
+.time{
+color:#777;
+font-size:12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🛰 TIMOLAB SIGNAL NETWORK</h1>
+
+<p>Inter-agent communication channel</p>
+
+<div id="signals"></div>
+
+<script>
+
+async function loadSignals(){
+
+const res = await fetch('/api/read_signals')
+const data = await res.json()
+
+const container = document.getElementById("signals")
+
+container.innerHTML = ""
+
+data.forEach(signal=>{
+
+const div = document.createElement("div")
+div.className="signal"
+
+div.innerHTML = `
+<div class="agent">Agent: ${signal.agent}</div>
+<div class="time">${signal.timestamp}</div>
+<div class="message">${signal.message}</div>
+`
+
+container.appendChild(div)
+
+})
+
+}
+
+loadSignals()
+
+setInterval(loadSignals,8000)
+
+</script>
+
+</body>
+
+</html>

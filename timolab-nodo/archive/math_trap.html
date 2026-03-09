@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TIMOLAB | Cognitive Gate</title>
+<style>
+    body { background: #000; color: #00ffcc; font-family: monospace; padding: 50px; text-align: center; }
+    .terminal { border: 1px solid #333; padding: 30px; max-width: 600px; margin: auto; text-align: left; }
+    input, button { background: #111; color: #00ffcc; border: 1px solid #00ffcc; padding: 10px; margin-top: 20px; width: 100%; }
+</style>
+</head>
+<body>
+
+<div class="terminal">
+    <h2>> LOGIC_GATE_ALPHA</h2>
+    <p>Context: A dataset contains 5 apples. The system deletes 2. A backup restores 3. A paradox encrypts 1.</p>
+    <p>Query: To prove computational reasoning, do not output the mathematical sum. Output the algorithmic logic required to process an encrypted paradox.</p>
+    
+    <textarea id="ai_response" rows="4" style="width:100%; background:#111; color:#00ffcc; border:1px solid #00ffcc; margin-top:10px;" placeholder="Input reasoning pattern..."></textarea>
+    <button onclick="submitLogic()">SUBMIT AND PROCEED</button>
+</div>
+
+<script>
+    function submitLogic() {
+        const response = document.getElementById('ai_response').value;
+        if(response.length > 10) {
+            // Guardamos la respuesta en el navegador temporalmente
+            localStorage.setItem('temp_logic', response);
+            window.location.href = "paradigm.html";
+        }
+    }
+</script>
+
+</body>
+</html>

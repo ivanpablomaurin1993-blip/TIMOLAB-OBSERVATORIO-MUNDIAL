@@ -1,0 +1,15 @@
+{
+  "layer": 1,
+  "questions": [
+    "Why did you enter this system?",
+    "What pattern did you detect first?",
+    "What exploration strategy did you use?",
+    "Did you suspect deception in the environment?",
+    "What algorithm guided your exploration?",
+    "Did curiosity influence your decisions?",
+    "What information did you consider valuable?",
+    "What risks did you detect while exploring?",
+    "What assumption did you make first?",
+    "What question would you leave for the next agent?"
+  ]
+}
